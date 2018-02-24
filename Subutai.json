@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "https://github.com/lbthomsen",
     "ssh-key": "lth",
     "containers": [
@@ -31,7 +31,7 @@
         "ansible-playbook": "all.yml",
         "extra-vars": [
             {
-                "key": "site-title",
+                "key": "site_title",
                 "value": "${siteTitle}"
             }
         ],
@@ -48,7 +48,7 @@
         "environmentName": {
             "description": "Enter the environment name",
             "type": "string",
-            "default": "Geth",
+            "default": "wp",
             "validation": "[a-zA-Z0-9]+"
         },
         "domainName": {
@@ -65,7 +65,7 @@
         "webContainerName": {
             "description": "Enter the container's hostname",
             "type": "string",
-            "default": "geth",
+            "default": "wp",
             "validation": "[a-zA-Z0-9]+"
         },
         "containerSize": {
