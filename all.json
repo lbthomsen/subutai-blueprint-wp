@@ -1,6 +1,6 @@
 [
     {
-        "hosts": "all",
+        "hosts": "wp",
         "remote_user": "root",
         "tasks": [
             {

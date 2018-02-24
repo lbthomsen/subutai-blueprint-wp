@@ -23,12 +23,27 @@
     "peer-criteria": [
         {
             "name": "HTTP-GROUP",
-            "max-price": "25",
-            "avg-cpu-load": "90",
-            "min-free-ram": "1",
-            "min-free-disk-space": "1"
+            "max-price": "25"
         }
     ],
+    "ansible-configuration": {
+        "source-url": "https://github.com/lbthomsen/subutai-blueprint-wp/archive/master.zip",
+        "ansible-playbook": "all.yml",
+        "extra-vars": [
+            {
+                "key": "site-title",
+                "value": "${siteTitle}"
+            }
+        ],
+        "groups": [
+            {
+                "name": "wp",
+                "hostnames": [
+                    "${webContainerName}"
+                ]
+            }
+        ]
+    },
     "user-variables": {
         "environmentName": {
             "description": "Enter the environment name",
@@ -56,26 +71,8 @@
         "containerSize": {
             "description": "Container Size",
             "type": "enum",
-            "default": "SMALL",
-            "validation": "SMALL,MEDIUM,LARGE,HUGE"
+            "default": "TINY",
+            "validation": "TINY,SMALL,MEDIUM,LARGE,HUGE"
         }
-    },
-    "ansible-configuration": {
-        "source-url": "https://github.com/lbthomsen/subutai-blueprint-wp/archive/master.zip",
-        "ansible-playbook": "subutai-blueprint-wp-master/all.yml",
-        "extra-vars": [
-            {
-                "key": "site-title",
-                "value": "${siteTitle}"
-            }
-        ],
-        "groups": [
-            {
-                "name": "all",
-                "hostnames": [
-                    "${webContainerName}"
-                ]
-            }
-        ]
     }
 }
