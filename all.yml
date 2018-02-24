@@ -5,30 +5,37 @@
   - name: apt-update
     apt:
       update_cache: 'yes'
+      allow_unauthenticated: 'yes'
       upgrade: 'yes'
   - name: install apache2
     apt:
       name: apache2
+      allow_unauthenticated: 'yes'
       update_cache: 'no'
   - name: install php
     apt:
       name: php7.0
+      allow_unauthenticated: 'yes'
       update_cache: 'no'
   - name: install php-cgi
     apt:
       name: php7.0-cgi
+      allow_unauthenticated: 'yes'
       update_cache: 'no'
   - name: install php-mysql
     apt:
       name: php7.0-mysql
+      allow_unauthenticated: 'yes'
       update_cache: 'no'
   - name: install mariadb
     apt:
       name: mariadb-server
+      allow_unauthenticated: 'yes'
       update_cache: 'no'
   - name: install python-mysqldb
     apt:
       name: python-mysqldb
+      allow_unauthenticated: 'yes'
       update_cache: 'no'
   - name: create database
     mysql_db:

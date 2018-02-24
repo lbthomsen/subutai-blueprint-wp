@@ -7,7 +7,7 @@
     "containers": [
         {
             "hostname": "${webContainerName}",
-            "template": "debian-stretch",
+            "template": "ubuntu16",
             "peer-criteria": "HTTP-GROUP",
             "size": "${containerSize}",
             "port-mapping": [
