@@ -1,0 +1,57 @@
+---
+name: "${environmentName}"
+description: Wordpress Standalone
+version: 0.0.1
+author: https://github.com/lbthomsen
+ssh-key: lth
+containers:
+- hostname: "${webContainerName}"
+  template: debian-stretch
+  peer-criteria: HTTP-GROUP
+  size: "${containerSize}"
+  port-mapping:
+  - protocol: http
+    domain: "${domainName}"
+    internal-port: '80'
+    external-port: '80'
+peer-criteria:
+- name: HTTP-GROUP
+  max-price: '25'
+  avg-cpu-load: '90'
+  min-free-ram: '1'
+  min-free-disk-space: '1'
+user-variables:
+  environmentName:
+    description: Enter the environment name
+    type: string
+    default: Geth
+    validation: "[a-zA-Z0-9]+"
+  domainName:
+    description: Enter the application domain name
+    type: domain
+    default: change.the.domain
+    validation: "[a-zA-Z0-9]+"
+  siteTitle:
+    description: Enter the site's title
+    type: string
+    default: title
+  webContainerName:
+    description: Enter the container's hostname
+    type: string
+    default: geth
+    validation: "[a-zA-Z0-9]+"
+  containerSize:
+    description: Container Size
+    type: enum
+    default: SMALL
+    validation: SMALL,MEDIUM,LARGE,HUGE
+ansible-configuration:
+  source-url: https://github.com/lbthomsen/subutai-blueprint-wp/archive/master.zip
+  ansible-playbook: all.json
+  extra-vars:
+  - key: site-title
+    value: "${siteTitle}"
+  groups:
+  - name: all
+    hostnames:
+    - "${webContainerName}"
