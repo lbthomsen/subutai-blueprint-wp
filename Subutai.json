@@ -1,9 +1,9 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "0.0.1", 
-    "author": "https://github.com/lbthomsen", 
-    "ssh-key": "lth", 
+    "version": "0.0.1",
+    "author": "https://github.com/lbthomsen",
+    "ssh-key": "lth",
     "containers": [
         {
             "hostname": "${webContainerName}",
@@ -42,6 +42,11 @@
             "default": "change.the.domain",
             "validation": "[a-zA-Z0-9]+"
         },
+        "siteTitle": {
+            "description": "Enter the site's title",
+            "type": "string",
+            "default": "title"
+        },
         "webContainerName": {
             "description": "Enter the container's hostname",
             "type": "string",
@@ -54,5 +59,23 @@
             "default": "SMALL",
             "validation": "SMALL,MEDIUM,LARGE,HUGE"
         }
+    },
+    "ansible-configuration": {
+        "source-url": "https://github.com/lbthomsen/subutai-blueprint-wp/archive/master.zip",
+        "ansible-playbook": "all.json",
+        "extra-vars": [
+            {
+                "key": "site-title",
+                "value": "${siteTitle}"
+            }
+        ],
+        "groups": [
+            {
+                "name": "all",
+                "hostnames": [
+                    "${webContainerName}"
+                ]
+            }
+        ]
     }
 }
