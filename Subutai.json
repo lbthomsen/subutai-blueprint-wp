@@ -23,7 +23,10 @@
     "peer-criteria": [
         {
             "name": "HTTP-GROUP",
-            "max-price": "25"
+            "max-price": "25",
+            "avg-cpu-load": "90",
+            "min-free-ram": "1",
+            "min-free-disk-space": "1"
         }
     ],
     "user-variables": {
