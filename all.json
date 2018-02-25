@@ -109,7 +109,7 @@
             },
             {
                 "name": "install wp",
-                "command": "wp core install --url=wp0 --title='{{site_title}}' --admin_user=admin --admin_password=admin --admin_email=info@wp-cli.org --allow-root",
+                "command": "wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root",
                 "args": {
                     "chdir": "/var/www/html"
                 }
@@ -132,7 +132,10 @@
             },
             {
                 "name": "restart apache",
-                "command": "service apache2 restart"
+                "service": {
+                    "name": "apache2",
+                    "state": "restarted"
+                }
             }
         ]
     }
