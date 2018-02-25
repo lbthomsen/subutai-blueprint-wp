@@ -33,6 +33,18 @@
             {
                 "key": "site_title",
                 "value": "${siteTitle}"
+            }, 
+            {
+                "key": "domain_name",
+                "value": "${domainName}"
+            }, 
+            {
+                "key": "admin_user",
+                "value": "${adminUser}"
+            }, 
+            {
+                "key": "admin_pwd",
+                "value": "${adminPwd}"
             }
         ],
         "groups": [
@@ -61,6 +73,16 @@
             "description": "Enter the site's title",
             "type": "string",
             "default": "title"
+        },
+        "adminuser": {
+            "description": "Site administrator user",
+            "type": "string",
+            "default": "admin"
+        },
+        "adminPwd": {
+            "description": "Site administrator password",
+            "type": "string",
+            "default": "admin"
         },
         "webContainerName": {
             "description": "Enter the container's hostname",

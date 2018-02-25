@@ -129,6 +129,10 @@
                     "owner": "www-data",
                     "group": "www-data"
                 }
+            }, 
+            {
+                "name": "restart apache",
+                "command": "service apache2 restart"
             }
         ]
     }
