@@ -1,13 +1,13 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "https://github.com/lbthomsen",
     "ssh-key": "lth",
     "containers": [
         {
             "hostname": "${webContainerName}",
-            "template": "ubuntu16",
+            "template": "debian-stretch",
             "peer-criteria": "HTTP-GROUP",
             "size": "${containerSize}",
             "port-mapping": [
