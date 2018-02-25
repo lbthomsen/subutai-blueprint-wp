@@ -74,7 +74,7 @@
             "type": "string",
             "default": "title"
         },
-        "adminuser": {
+        "adminUser": {
             "description": "Site administrator user",
             "type": "string",
             "default": "admin"
