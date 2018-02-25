@@ -116,9 +116,9 @@
             },
             {
                 "name": "remove index.html",
-                "command": "rm index.html",
-                "args": {
-                    "chdir": "/var/www/html"
+                "file": {
+                    "name": "/var/www/html/index.html",
+                    "state": "absent"
                 }
             },
             {
@@ -129,7 +129,7 @@
                     "owner": "www-data",
                     "group": "www-data"
                 }
-            }, 
+            },
             {
                 "name": "restart apache",
                 "command": "service apache2 restart"
