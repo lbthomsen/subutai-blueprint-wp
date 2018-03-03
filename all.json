@@ -54,7 +54,7 @@
             {
                 "name": "install python-mysqldb",
                 "apt": {
-                    "name": "python3-mysqldb",
+                    "name": "python-mysqldb",
                     "allow_unauthenticated": "yes",
                     "update_cache": "no"
                 }
