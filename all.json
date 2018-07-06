@@ -5,6 +5,10 @@
         "remote_user": "root",
         "tasks": [
             {
+                "name": "DPKG Unsafe I/O", 
+                "raw": "test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io"
+            },
+            {
                 "name": "Update",
                 "raw": "apt-get -y --allow-unauthenticated update || true"
             },
