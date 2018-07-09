@@ -65,6 +65,8 @@
 
     - name: Set site description
       command: "wp option update blogdescription '{{site_description}}' --allow-root"
+      args: 
+        chdir: /var/www/html
 
     - name: Remove original index.html
       file:
