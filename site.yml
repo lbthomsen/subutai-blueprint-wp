@@ -1,0 +1,82 @@
+# Ansible Playbook for Subutai WordPress blueprint                                                                                                                                             
+---                                                                                                                                                                                            
+                                                                                                                                      
+- hosts: wp
+  remote_user: root
+  tasks:
+
+    - name: Disable dpkg fsync
+      raw: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
+
+    - name: Install required debs
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items: 
+        - php7.0
+        - php7.0-cgi
+        - php7.0-mysql
+        - apache2
+        - libapache2-mod-php7.0
+        - unzip 
+        - mariadb-server
+        - python-mysqldb
+
+    - name: Create database
+      mysql_db:
+        name: wordpress
+        state: present
+        encoding: utf8
+
+    - name: Create database user
+      mysql_user:
+        name: wordpress
+        password: wordpress
+        priv: "wordpress.*:ALL"
+
+    - name: Get wp-cli
+      get_url:
+        url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        dest: /usr/local/bin/wp
+        validate_certs: no
+
+    - name: Make wp-cli executable
+      file:
+        path: /usr/local/bin/wp
+        state: touch
+        mode: u+rwx,g+rx,o+rx
+
+    - name: Download WP Core
+      command: wp core download --allow-root
+      args:
+        chdir: /var/www/html
+        creates: /var/www/html/index.php
+
+    - name: Create WP Config
+      command: wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root
+      args: 
+        chdir: /var/www/html
+        creates: /var/www/html/wp-config.php
+
+    - name: Install WP
+      command: wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
+      args: 
+        chdir: /var/www/html
+
+    - name: Remove original index.html
+      file:
+        name: /var/www/html/index.html
+        state: absent
+
+    - name: Change ownership
+      file: 
+        path: /var/www/html
+        recurse: yes
+        owner: www-data
+        group: www-data
+
+    - name: Restart apache
+      service:
+        name: apache2
+        state: restarted
+        
