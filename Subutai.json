@@ -34,6 +34,10 @@
                 "value": "${siteTitle}"
             }, 
             {
+                "key": "site_description",
+                "value": "${siteDescription}"
+            }, 
+            {
                 "key": "domain_name",
                 "value": "${domainName}"
             }, 
@@ -72,6 +76,11 @@
             "description": "Enter the site's title",
             "type": "string",
             "default": "title"
+        },
+        "siteDescription": {
+            "description": "Enter the site's description/tagline",
+            "type": "string",
+            "default": "description"
         },
         "adminUser": {
             "description": "Site administrator user",

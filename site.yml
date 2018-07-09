@@ -63,6 +63,9 @@
       args: 
         chdir: /var/www/html
 
+    - name: Set site description
+      command: "wp option update blogdescription '{{site_description}}' "
+
     - name: Remove original index.html
       file:
         name: /var/www/html/index.html
@@ -79,4 +82,3 @@
       service:
         name: apache2
         state: restarted
-        
