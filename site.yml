@@ -1,6 +1,6 @@
-# Ansible Playbook for Subutai WordPress blueprint                                                                                                                                             
----                                                                                                                                                                                            
-                                                                                                                                      
+# Ansible Playbook for Subutai WordPress blueprint
+---
+
 - hosts: wp
   remote_user: root
   tasks:
@@ -65,6 +65,11 @@
 
     - name: Set site description
       command: "wp option update blogdescription '{{site_description}}' --allow-root"
+      args: 
+        chdir: /var/www/html
+
+    - name: Delete Unused Plugins
+      command: "wp plugin delete akismet hello --allow-root"
       args: 
         chdir: /var/www/html
 
