@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "author": "https://github.com/lbthomsen",
     "containers": [
         {
@@ -22,7 +22,7 @@
     "peer-criteria": [
         {
             "name": "HTTP-GROUP",
-            "max-price": "25"
+            "max-price": "100"
         }
     ],
     "ansible-configuration": {
