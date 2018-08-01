@@ -8,6 +8,11 @@
     - name: Disable dpkg fsync
       raw: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
 
+    - name: Upgrade debian
+      apt:
+        update_cache: true
+        upgrade: true
+
     - name: Install required debs
       apt:
         name: "{{ item }}"
