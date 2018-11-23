@@ -80,12 +80,12 @@
 
     - name: Insert extra config
       blockinfile:
-        path: /var/www/html/wp-config.pho
+        path: /var/www/html/wp-config.php
         insertafter: /* That's all, stop editing! Happy blogging. */
         content: |
           if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )
           {
-                $_SERVER['HTTPS']       = 'on';
+                $_SERVER['HTTPS']       = 'on';  
                         $_SERVER['SERVER_PORT'] = '443';
                         define('FORCE_SSL_ADMIN', true);
           }
