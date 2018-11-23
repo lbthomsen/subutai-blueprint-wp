@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "2.0.5",
+    "version": "2.0.6",
     "author": "https://github.com/lbthomsen",
     "containers": [
         {
@@ -26,7 +26,7 @@
     ],
     "ansible-configuration": {
         "source-url": "https://github.com/lbthomsen/subutai-blueprint-wp/archive/master.zip",
-        "ansible-playbook": "all.json",
+        "ansible-playbook": "site.yml",
         "extra-vars": [
             {
                 "key": "site_title",
