@@ -64,12 +64,17 @@
         creates: /var/www/html/wp-config.php
 
     - name: Install WP
-      command: wp core install --url='https://{{domain_name}}' --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
+      command: wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
       args: 
         chdir: /var/www/html
 
     - name: Set site description
       command: "wp option update blogdescription '{{site_description}}' --allow-root"
+      args: 
+        chdir: /var/www/html
+
+    - name: Change to https
+      shell: wp search-replace 'http://{{domain_name}}' 'https://{{domain_name}}' --skip-columns=guid --allow-root
       args: 
         chdir: /var/www/html
 
