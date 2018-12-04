@@ -52,29 +52,49 @@
         mode: u+rwx,g+rx,o+rx
 
     - name: Download WP Core
-      command: wp core download --allow-root
+      shell: wp core download --allow-root
       args:
         chdir: /var/www/html
         creates: /var/www/html/index.php
 
     - name: Create WP Config
-      command: wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root
+      shell: wp config create --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --allow-root
       args: 
         chdir: /var/www/html
         creates: /var/www/html/wp-config.php
 
     - name: Install WP
-      command: wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
+      shell: wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
       args: 
         chdir: /var/www/html
 
     - name: Set site description
-      command: "wp option update blogdescription '{{site_description}}' --allow-root"
+      shell: wp option update blogdescription '{{site_description}}' --allow-root
       args: 
         chdir: /var/www/html
 
+    - name: Change to https
+      shell: wp search-replace 'http://{{domain_name}}' 'https://{{domain_name}}' --skip-columns=guid --allow-root
+      args: 
+        chdir: /var/www/html
+
+    - name: Insert extra config
+      blockinfile:
+        path: /var/www/html/wp-config.php
+        insertafter: /* That's all, stop editing! Happy blogging. */
+        content: |
+          if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )
+          {
+                $_SERVER['HTTPS']       = 'on';  
+                        $_SERVER['SERVER_PORT'] = '443';
+                        define('FORCE_SSL_ADMIN', true);
+          }
+          if ( isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+                $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_FORWARDED_HOST'];
+          }
+
     - name: Delete Unused Plugins
-      command: "wp plugin delete akismet hello --allow-root"
+      shell: wp plugin delete akismet hello --allow-root
       args: 
         chdir: /var/www/html
 

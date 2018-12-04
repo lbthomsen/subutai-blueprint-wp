@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "2.0.5",
+    "version": "3.0.1",
     "author": "https://github.com/lbthomsen",
     "containers": [
         {
@@ -11,10 +11,10 @@
             "size": "${containerSize}",
             "port-mapping": [
                 {
-                    "protocol": "http",
+                    "protocol": "https",
                     "domain": "${domainName}",
                     "internal-port": "80",
-                    "external-port": "80"
+                    "external-port": "443"
                 }
             ]
         }
@@ -26,7 +26,7 @@
     ],
     "ansible-configuration": {
         "source-url": "https://github.com/subutai-blueprints/wordpress-standalone/archive/master.zip",
-        "ansible-playbook": "all.json",
+        "ansible-playbook": "site.yml",
         "extra-vars": [
             {
                 "key": "site_title",
