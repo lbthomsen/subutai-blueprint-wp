@@ -87,8 +87,9 @@
     - name: Insert extra config
       blockinfile:
         path: /var/www/html/wp-config.php
-        insertafter: '^$table_prefix.*$'
-        content: |
+        marker: "/* {mark} ANSIBLE MANAGED BLOCK */"
+        insertafter: '^\$table_prefix.*$'
+        block: |
           if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )
           {
                 $_SERVER['HTTPS']       = 'on';  
