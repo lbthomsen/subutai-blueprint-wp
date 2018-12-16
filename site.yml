@@ -27,6 +27,12 @@
         - mariadb-server
         - python-mysqldb
 
+    - name: Add wp user
+      user: 
+        name: wp
+        group: users
+        shell: /bin/bash
+
     - name: Create database
       mysql_db:
         name: wordpress
