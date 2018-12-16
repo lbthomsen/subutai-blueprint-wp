@@ -27,6 +27,12 @@
         - mariadb-server
         - python-mysqldb
 
+    - name: Add wp user
+      user: 
+        name: wp
+        group: users
+        shell: /bin/bash
+
     - name: Create database
       mysql_db:
         name: wordpress
@@ -64,7 +70,7 @@
         creates: /var/www/html/wp-config.php
 
     - name: Install WP
-      shell: wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
+      shell: wp core install --url='{{domain_name}}' --title='{{site_title}}' --admin_user='{{admin_user}}' --admin_password='{{admin_pwd}}' --admin_email='info@wp-cli.org' --skip-email --allow-root
       args: 
         chdir: /var/www/html
 
@@ -74,15 +80,16 @@
         chdir: /var/www/html
 
     - name: Change to https
-      shell: wp search-replace 'http://{{domain_name}}' 'https://{{domain_name}}' --skip-columns=guid --allow-root
+      shell: wp search-replace 'http://{{domain_name}}' 'https://{{domain_name}}' --allow-root
       args: 
         chdir: /var/www/html
 
     - name: Insert extra config
       blockinfile:
         path: /var/www/html/wp-config.php
-        insertafter: /* That's all, stop editing! Happy blogging. */
-        content: |
+        marker: "/* {mark} ANSIBLE MANAGED BLOCK */"
+        insertafter: '^\$table_prefix.*$'
+        block: |
           if ( $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' )
           {
                 $_SERVER['HTTPS']       = 'on';  
