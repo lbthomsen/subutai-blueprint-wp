@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "2.0.7",
+    "version": "3.0.2",
     "author": "https://github.com/lbthomsen",
     "containers": [
         {
@@ -11,10 +11,10 @@
             "size": "${containerSize}",
             "port-mapping": [
                 {
-                    "protocol": "http",
+                    "protocol": "https",
                     "domain": "${domainName}",
                     "internal-port": "80",
-                    "external-port": "80"
+                    "external-port": "443"
                 }
             ]
         }
