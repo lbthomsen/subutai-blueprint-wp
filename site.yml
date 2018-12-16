@@ -27,11 +27,13 @@
         - mariadb-server
         - python-mysqldb
 
-    - name: Add wp user
-      user: 
-        name: wp
-        group: users
-        shell: /bin/bash
+    - name: Install limits.ini
+      template: 
+        src: files/limits.ini
+        dest: /etc/php/7.0/mods-available/limits.ini
+
+    - name: Activate limits.ini
+      shell: phpenmod limits
 
     - name: Create database
       mysql_db:
