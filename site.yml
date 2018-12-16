@@ -70,7 +70,7 @@
         creates: /var/www/html/wp-config.php
 
     - name: Install WP
-      shell: wp core install --url={{domain_name}} --title='{{site_title}}' --admin_user={{admin_user}} --admin_password={{admin_pwd}} --admin_email=info@wp-cli.org --allow-root
+      shell: wp core install --url='{{domain_name}}' --title='{{site_title}}' --admin_user='{{admin_user}}' --admin_password='{{admin_pwd}}' --admin_email='info@wp-cli.org' --allow-root
       args: 
         chdir: /var/www/html
 
