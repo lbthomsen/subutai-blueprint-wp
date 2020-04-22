@@ -18,11 +18,11 @@
         name: "{{ item }}"
         state: present
       with_items: 
-        - php7.0
-        - php7.0-cgi
-        - php7.0-mysql
+        - php7.3
+        - php7.3-cgi
+        - php7.3-mysql
         - apache2
-        - libapache2-mod-php7.0
+        - libapache2-mod-php7.3
         - unzip 
         - mariadb-server
         - python-mysqldb
@@ -30,7 +30,7 @@
     - name: Install limits.ini
       template: 
         src: files/limits.ini
-        dest: /etc/php/7.0/mods-available/limits.ini
+        dest: /etc/php/7.3/mods-available/limits.ini
 
     - name: Activate limits.ini
       shell: phpenmod limits
