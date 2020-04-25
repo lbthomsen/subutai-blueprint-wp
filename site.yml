@@ -5,9 +5,6 @@
   remote_user: root
   tasks:
 
-    - name: Disable dpkg fsync
-      raw: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
-
     - name: Upgrade debian
       apt:
         update_cache: true
@@ -15,17 +12,17 @@
 
     - name: Install required debs
       apt:
-        name: "{{ item }}"
-        state: present
-      with_items: 
-        - php7.3
-        - php7.3-cgi
-        - php7.3-mysql
+        name: 
+        - php
+        - php-cgi
+        - php-mysql
         - apache2
-        - libapache2-mod-php7.3
+        - libapache2-mod-php
         - unzip 
         - mariadb-server
+        - mariadb-client
         - python-mysqldb
+        state: present
 
     - name: Install limits.ini
       template: 
@@ -78,6 +75,11 @@
 
     - name: Set site description
       shell: wp option update blogdescription '{{site_description}}' --allow-root
+      args: 
+        chdir: /var/www/html
+
+    - name: Set theme
+      shell: wp theme install twentyseventeen --activate --allow-root
       args: 
         chdir: /var/www/html
 
