@@ -88,11 +88,6 @@
       args: 
         chdir: /var/www/html
 
-    - name: Override header image
-      template:
-        src: files/subutai.jpg
-        dest: /var/www/html/wp-content/themes/twentyseventeen/assets/images/header.jpg
-
     - name: Insert extra config
       blockinfile:
         path: /var/www/html/wp-config.php
