@@ -4,9 +4,6 @@
 - hosts: wp
   remote_user: root
 
-  vars: 
-    ansible_python_interpreter: auto_silent
-
   tasks:
 
     - name: Upgrade debian
