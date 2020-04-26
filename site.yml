@@ -3,34 +3,35 @@
 
 - hosts: wp
   remote_user: root
-  tasks:
 
-    - name: Disable dpkg fsync
-      raw: test -e /etc/dpkg/dpkg.cfg.d/unsafe-io || echo force-unsafe-io > /etc/dpkg/dpkg.cfg.d/unsafe-io
+  vars: 
+    ansible_python_interpreter: auto_silent
+
+  tasks:
 
     - name: Upgrade debian
       apt:
         update_cache: true
-        upgrade: true
+        upgrade: "yes"
 
     - name: Install required debs
       apt:
-        name: "{{ item }}"
-        state: present
-      with_items: 
-        - php7.0
-        - php7.0-cgi
-        - php7.0-mysql
+        name: 
+        - php
+        - php-cgi
+        - php-mysql
         - apache2
-        - libapache2-mod-php7.0
+        - libapache2-mod-php
         - unzip 
         - mariadb-server
+        - mariadb-client
         - python-mysqldb
+        state: present
 
     - name: Install limits.ini
       template: 
         src: files/limits.ini
-        dest: /etc/php/7.0/mods-available/limits.ini
+        dest: /etc/php/7.3/mods-available/limits.ini
 
     - name: Activate limits.ini
       shell: phpenmod limits
@@ -81,6 +82,23 @@
       args: 
         chdir: /var/www/html
 
+    - name: Copy subutai theme
+      copy: 
+        src: files/subutai
+        dest: /var/www/html/wp-content/themes
+        owner: www-data
+        group: www-data
+
+    - name: Set theme
+      shell: wp theme install twentyseventeen --allow-root
+      args: 
+        chdir: /var/www/html
+
+    - name: Activate subutai theme
+      shell: wp theme activate subutai --allow-root
+      args: 
+        chdir: /var/www/html
+
     - name: Change to https
       shell: wp search-replace 'http://{{domain_name}}' 'https://{{domain_name}}' --allow-root
       args: 
@@ -123,3 +141,5 @@
       service:
         name: apache2
         state: restarted
+
+# vim: ts=2 et nowrap autoindent

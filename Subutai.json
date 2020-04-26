@@ -1,12 +1,12 @@
 {
     "name": "${environmentName}",
     "description": "Wordpress Standalone",
-    "version": "3.0.3",
+    "version": "4.0.0",
     "author": "https://github.com/lbthomsen",
     "containers": [
         {
             "hostname": "${webContainerName}",
-            "template": "debian-stretch",
+            "template": "debian-buster",
             "peer-criteria": "HTTP-GROUP",
             "size": "${containerSize}",
             "port-mapping": [
